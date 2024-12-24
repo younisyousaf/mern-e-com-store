@@ -3,16 +3,17 @@
 import express from "express";
 import dotenv from "dotenv";
 import { dbConnect } from "./config/db.js";
+import productRoutes from "./routes/product.route.js";
 
 dotenv.config();
 
 const app = express();
+const port = process.env.PORT || 5000;
+app.use(express.json()); //Allows us to get data from the request body
 
-app.get("/products", (req, res) => {
-  res.send("Welcome to the server!");
-});
+app.use("/api/products", productRoutes);
 
-app.listen(5000, () => {
+app.listen(port, () => {
   dbConnect();
-  console.log("Server is running on port 5000");
+  console.log("Server is running at http://localhost:" + port);
 });
